@@ -1,18 +1,25 @@
+package practiceQuestions.arrayQues;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class p1 {
+public class linearSearch {
     public static void main(String[] args){
 //        createMultiDimArray();
 //        arrayListFunc();
 //        multiDimArrayList();
         int[] arr = {1,2,3,4};
+        int[][] arr2D = {{1,2,3,4}, {6,7,8,9}};
 //        swapInArray(arr);
 //        System.out.println(maxInArray(arr));
 //        rotateArray(arr);
         System.out.println(linearSearch(arr, 9));
         System.out.println(linearSearchReturnIndex(arr, 2));
+        System.out.println(searchInRange(arr, 3, 0,2));
+        System.out.println(searchMinElement(arr));
+        System.out.println(Arrays.toString(searchIn2D(arr2D, 4)));
+        System.out.println(evenNumList(arr));
     }
 
     static boolean linearSearch(int[] arr, int target){
@@ -108,5 +115,41 @@ public class p1 {
         for (int i =0;i<arr.length;i++){
             System.out.println(Arrays.toString(arr[i]));
         }
+    }
+    static int searchInRange(int[] arr, int target, int start, int end){
+        for (int i = start; i <= end; i++) {
+            if(arr[i] == target){
+                return i;
+            }
+        }
+        return -1;
+    }
+    static int searchMinElement(int[] arr){
+        int min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] < min){
+                min=arr[i];
+            }
+        }
+        return min;
+    }
+    static int[] searchIn2D(int[][] arr, int target){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0;j < arr[i].length;j++){
+                if(arr[i][j] == target){
+                    return new int[]{i, j};
+                }
+            }
+        }
+        return new int[]{-1, -1};
+    }
+    static ArrayList<Integer> evenNumList(int[] arr){
+        ArrayList<Integer> arrList = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 == 0){
+                arrList.add(arr[i]);
+            }
+        }
+        return arrList;
     }
 }

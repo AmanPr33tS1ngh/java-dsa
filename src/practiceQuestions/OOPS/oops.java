@@ -1,3 +1,5 @@
+package practiceQuestions.OOPS;
+
 class Employee{
     int id;
     String name;
@@ -52,8 +54,8 @@ public class oops {
         }
     }
     public static void main(String[] args) {
-//        Employee emp = new Employee(4, "Aman");
-//        Employee e = new Employee();
+//        practiceQuestions.OOPS.Employee emp = new practiceQuestions.OOPS.Employee(4, "Aman");
+//        practiceQuestions.OOPS.Employee e = new practiceQuestions.OOPS.Employee();
 //        System.out.println(emp);
 //        System.out.println(emp.id);
 //        System.out.println(emp.name);
@@ -62,7 +64,7 @@ public class oops {
 //        System.out.println(e.name);
 //        emp.callPrintSomething();
 //
-//        Dog d = new Dog();
+//        practiceQuestions.OOPS.Dog d = new practiceQuestions.OOPS.Dog();
 //        d.makeSound();
 //        d.move();
 //
