@@ -9,7 +9,8 @@ public class linearSearch {
 //        createMultiDimArray();
 //        arrayListFunc();
 //        multiDimArrayList();
-        int[] arr = {1,2,3,4};
+        int[] arr = {1,2,3, 9, 8, 6, 5, 4};
+        int[] arr1 = {1,2,4,3};
         int[][] arr2D = {{1,2,3,4}, {6,7,8,9}};
 //        swapInArray(arr);
 //        System.out.println(maxInArray(arr));
@@ -20,6 +21,9 @@ public class linearSearch {
         System.out.println(searchMinElement(arr));
         System.out.println(Arrays.toString(searchIn2D(arr2D, 4)));
         System.out.println(evenNumList(arr));
+        // #striver
+        System.out.println(secondLargestElement(arr));
+        System.out.println(isArraySorted(arr1));
     }
 
     static boolean linearSearch(int[] arr, int target){
@@ -151,5 +155,33 @@ public class linearSearch {
             }
         }
         return arrList;
+    }
+    static int secondLargestElement(int[] arr){
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+        for (int i = 0 ; i < arr.length ; i++){
+            if(arr[i] > largest){
+                largest = arr[i];
+            }
+            if (arr[i] > secondLargest && arr[i] < largest){
+                secondLargest = arr[i];
+            }
+        }
+        return secondLargest;
+    }
+    static boolean isArraySorted(int[] arr){
+        boolean isAsc = false;
+        if(arr[0] < arr[1]){
+            isAsc = true;
+        }
+        for (int i = 0;i<arr.length-1;i++){
+            if (isAsc && arr[i] > arr[i+1]){
+                return false;
+            }
+            else if (!isAsc && arr[i] < arr[i + 1]){
+                return false;
+            }
+        }
+        return true;
     }
 }
