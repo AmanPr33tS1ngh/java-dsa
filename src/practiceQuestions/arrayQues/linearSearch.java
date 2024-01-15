@@ -21,6 +21,7 @@ public class linearSearch {
         int[] arr5 = {1,2, 3, 4, 6, 7,8,9,10};
         int[] arr6 = {0,1,0,0,1,0,1,1,1,1,0,1,0,1,0,1,1,1,1,1,0,1,0};
         int[] arr7 = {3,2,4};
+        int[] arr8 = {2,0,1};
 
 //        swapInArray(arr);
 //        System.out.println(maxInArray(arr));
@@ -47,6 +48,7 @@ public class linearSearch {
 //        System.out.println(maxConsecutiveOnesInArray(arr6));
         System.out.println(longestSubArrayWithSumK(arr5, 3));
         System.out.println(Arrays.toString(twoSumEqualsK(arr7, 6)));
+        System.out.println(Arrays.toString(sortArrayOfZeroesOnesTwos(arr8)));
     }
 
     static boolean linearSearch(int[] arr, int target){
@@ -85,12 +87,6 @@ public class linearSearch {
     static void swapInArray(int[] arr){
         arr = swap(arr, 1,3);
         System.out.println(Arrays.toString(arr));
-    }
-    static int[] swap(int[] arr, int i, int j){
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        return arr;
     }
     static void multiDimArrayList(){
         Scanner sc = new Scanner(System.in);
@@ -439,5 +435,29 @@ public class linearSearch {
             }
         }
         return new int[]{-1, -1};
+    }
+    static int[] sortArrayOfZeroesOnesTwos(int[] arr){
+        int low = 0;
+        int mid = 0;
+        int high = arr.length -1;
+        while(mid <= high){
+            if(arr[mid] == 0){
+                swap(arr, mid, low);
+                mid++;
+                low++;
+            }else if(arr[mid] == 1){
+                mid++;
+            }else{
+                swap(arr, mid, high);
+                high--;
+            }
+        }
+        return arr;
+    }
+    static int[] swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        return arr;
     }
 }
