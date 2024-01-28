@@ -8,11 +8,12 @@ public class binarySearch {
         int[] arr = {1,3,5,6,7,9,10,12,15,19,20};
         int[] mountainArr = {1,3,5,6,7,9,10,8,4,3,1};
         int[] arr2 = {1,3,3,3,5,5,5,5,5,6,7,9,9,9,9,9,9,9,10,8,4,3,1};
-        System.out.println(search(arr, 18, "bs"));
-        System.out.println(search(arr, 18, "cn"));
-        System.out.println(search(arr, 18, "fn"));
-        System.out.println(findPeakInMountainArray(mountainArr));
-        System.out.println(Arrays.toString(searchRange(arr2, 5)));
+//        System.out.println(search(arr, 18, "bs"));
+//        System.out.println(search(arr, 18, "cn"));
+//        System.out.println(search(arr, 18, "fn"));
+//        System.out.println(findPeakInMountainArray(mountainArr));
+//        System.out.println(Arrays.toString(searchRange(arr2, 5)));
+        System.out.println(recursiveBS(arr, 19, 0, arr.length - 1));
     }
 
     static int search(int[] arr, int target, String type){
@@ -76,5 +77,18 @@ public class binarySearch {
             }
         }
         return ans;
+    }
+
+    static int recursiveBS(int[] arr, int target, int start, int end){
+        if (start > end){
+            return -1;
+        }
+        int mid = start + (end - start) / 2;
+        if (arr[mid] < target){
+            return recursiveBS(arr, target, mid + 1, end);
+        }else if(arr[mid] > target){
+            return recursiveBS(arr, target, start, mid -1);
+        }
+        return mid;
     }
 }
