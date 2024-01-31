@@ -1,8 +1,11 @@
 package practiceQuestions.linkedList;
 
+import java.util.List;
+
 class ListNode {
 
     /**
+     * LEET CODE
      * Definition for singly-linked list.
      * public class ListNode {
      *     int val;
@@ -18,6 +21,17 @@ class ListNode {
     ListNode(int val) { this.val = val; }
     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  }
+class LinkedListNode {
+    /** CODING NINJAS **/
+
+    int data;
+    LinkedListNode next;
+
+    LinkedListNode(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
 public class questions {
     public static void main(String[] args) {
         DoublyLinkedList dll = new DoublyLinkedList();
@@ -125,5 +139,72 @@ public class questions {
         }
         return head;
     }
+
+    static ListNode reverseLinkedList(ListNode head){
+        if(head==null || head.next == null)return head;
+        ListNode node = head;
+        ListNode prev = null;
+        while(node != null){
+            ListNode next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
+        };
+        return prev;
+    }
+    static LinkedListNode reverseLinkedList(LinkedListNode head){
+        if(head==null || head.next == null)return head;
+        LinkedListNode node = head;
+        LinkedListNode prev = null;
+        while(node != null){
+            LinkedListNode next = node.next;
+            node.next = prev;
+            prev = node;
+            node = next;
+        };
+        return prev;
+    }
+
+
+        static int solve(LinkedListNode head){
+
+            if(head.data==-1) return 1;
+
+            int carry = solve(head.next);
+
+            head.data+=carry;
+
+            carry=(head.data/10);
+
+            head.data%=10;
+
+            return carry;
+
+        }
+
+
+
+     static LinkedListNode addOneToList(LinkedListNode linkedListNode) {
+
+        if(linkedListNode==null)return linkedListNode;
+
+        LinkedListNode temp=linkedListNode;
+
+        int carry = solve(temp);
+
+        if(carry>0){
+
+            LinkedListNode newNode=new LinkedListNode(carry);
+
+            newNode.next=linkedListNode;
+
+            linkedListNode=newNode;
+
+        }
+
+        return linkedListNode;
+
+    }
+
 }
 
