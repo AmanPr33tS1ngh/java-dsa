@@ -205,6 +205,24 @@ public class questions {
         return linkedListNode;
 
     }
-
+    static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null)return null;
+        ListNode tA = headA;
+        ListNode tB = headB;
+        while(tA != tB){
+            tA = tA.next;
+            tB = tB.next;
+            if(tA == tB){
+                return tA;
+            }
+            if(tA == null){
+                tA = headB;
+            }
+            if(tB == null){
+                tB = headA;
+            }
+        }
+        return tA;
+    }
 }
 
