@@ -1,6 +1,9 @@
 package practiceQuestions.linkedList;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class ListNode {
 
@@ -32,6 +35,30 @@ class LinkedListNode {
         this.next = null;
     }
 }
+class Node {
+    /** CODING NINJAS **/
+    public int data;
+    public Node next;
+
+    Node()
+    {
+        this.data = 0;
+        this.next = null;
+    }
+
+    Node(int data)
+    {
+        this.data = data;
+        this.next = null;
+    }
+
+    Node(int data, Node next)
+    {
+        this.data = data;
+        this.next = next;
+    }
+};
+
 public class questions {
     public static void main(String[] args) {
         DoublyLinkedList dll = new DoublyLinkedList();
@@ -224,5 +251,208 @@ public class questions {
         }
         return tA;
     }
+    static ListNode midNode(ListNode head) {
+        if (head == null || head.next == null)return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    static ListNode deleteMidNode(ListNode head) {
+        if (head == null || head.next == null)return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        boolean fastAhead = false;
+        while(fast != null && fast.next != null){
+            if(fastAhead){
+                slow = slow.next;
+            }
+            fastAhead = true;
+            fast = fast.next.next;
+        }
+        if (slow != null && slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return head;
+    }
+    static ListNode betterDeleteMidNode(ListNode head) {
+        if (head == null || head.next == null)return null;
+        ListNode slow = head;
+        ListNode fast = head.next.next;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+    static Node deleteMidNode(Node head) {
+        if (head == null || head.next == null)return null;
+        Node slow = head;
+        Node fast = head;
+        boolean fastAhead = false;
+        while(fast != null && fast.next != null){
+            if(fastAhead){
+                slow = slow.next;
+            }
+            fastAhead = true;
+            fast = fast.next.next;
+        }
+        if (slow != null && slow.next != null) {
+            slow.next = slow.next.next;
+        }
+        return head;
+    }
+    static boolean detectCycle(ListNode head) {
+        if (head == null || head.next == null)return false;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+    static int getLengthOfCycle(Node slow, Node fast){
+        int count = 0;
+        do{
+            fast = fast.next;
+            count += 1;
+        }while(slow != fast);
+        return count;
+    }
+    static int lengthOfCycle(Node head) {
+        if (head == null || head.next == null) return 0;
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return getLengthOfCycle(slow, fast);
+        }
+        return 0;
+    }
+    static ListNode getStateOfCycle(ListNode head, ListNode fast){
+        ListNode start = head;
+        while(fast != start){
+            fast = fast.next;
+            start = start.next;
+        }
+        return fast;
+    }
+    static ListNode findStartOfCycle(ListNode head) {
+        if (head == null || head.next == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return getStateOfCycle(head, fast);
+        }
+        return null;
+    }
+
+    static Node getStateOfCycle(Node head, Node fast){
+        Node start = head;
+        while(fast != start){
+            fast = fast.next;
+            start = start.next;
+        }
+        return fast;
+    }
+    static Node findStartOfCycle(Node head) {
+        if (head == null || head.next == null) return null;
+        Node slow = head;
+        Node fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return getStateOfCycle(head, fast);
+        }
+        return null;
+    }
+
+    class Node {
+        public int data;
+        public Node next;
+        public Node prev;
+
+        Node()
+        {
+            this.data = 0;
+            this.next = null;
+            this.prev = null;
+        }
+        Node(int data)
+        {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+        Node(int data, Node next, Node prev)
+        {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+//    class Node<T> {
+//        T data;
+//        Node<T> next;
+//        Node<T> prev;
+//
+//        public Node(T data) {
+//            this.data = data;
+//        }
+//    }
+    static Node deleteNodeWithKey(Node head, int key) {
+        if (head == null) return null;
+        Node temp = head.next;
+        Node prev = null;
+        Node next = null;
+        while(temp != null){
+            if(temp.data == key){
+                if(temp == head){
+                    head = temp;
+                }
+                next = temp.next;
+                prev = temp.prev;
+                if(next != null){
+                    next.prev = prev;
+                }
+                if(prev != null){
+                    prev.next = next;
+                }
+            }
+            temp = temp.next;
+        }
+        return head;
+    }
+    static Map<Integer,Integer> findPair(Node head, int k) { // two pointer approach
+        Map<Integer,Integer> mp=new HashMap<>();
+        Node left= head;
+        Node right = head;
+        while(right!=null && right.next !=null)
+        {
+            right = right.next;
+        }
+        while(left.data <= right.data){
+            int sum = left.data + right.data;
+            if(sum == k){
+                mp.put(left.data, right.data);
+            }
+            else if(sum < k){
+                left = left.next;
+            }else{
+                right = right.prev;
+            }
+        }
+        return mp;
+    }
+
 }
 
