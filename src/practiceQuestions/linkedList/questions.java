@@ -454,5 +454,172 @@ public class questions {
         return mp;
     }
 
+    static Node rotateLL(Node head, int k){
+        if(head == null || head.next == null || k == 0) return head;
+        int lengthOfLL = 1;
+        Node temp = head;
+        while(temp.next != null){
+            temp = temp.next;
+            lengthOfLL += 1;
+        }
+        int kModLen = k % lengthOfLL;
+        if (kModLen == 0) return head;
+        int counter = 1;
+        temp.next = head;
+        temp = head;
+
+        while(temp.next != null){
+            if (counter == lengthOfLL - kModLen) break;
+            temp = temp.next;
+            counter += 1;
+        }
+        Node first = temp.next;
+        temp.next = null;
+        return first;
+    }
+    static ListNode rotateLL(ListNode head, int k){
+        if(head == null || head.next == null || k == 0) return head;
+        int lengthOfLL = 1;
+        ListNode temp = head;
+        while(temp.next != null){
+            temp = temp.next;
+            lengthOfLL += 1;
+        }
+        int kModLen = k % lengthOfLL;
+        if (kModLen == 0) return head;
+        int counter = 1;
+        temp.next = head;
+        temp = head;
+
+        while(temp.next != null){
+            if (counter == lengthOfLL - kModLen) break;
+            temp = temp.next;
+            counter += 1;
+        }
+        ListNode first = temp.next;
+        temp.next = null;
+        return first;
+    }
+    static LinkedListNode mergeTwoLL(LinkedListNode first, LinkedListNode second){
+        if(first == null) return second;
+        if(second == null) return first;
+
+        LinkedListNode<Integer> temp1 = first;
+        LinkedListNode<Integer> temp2 = second;
+        LinkedListNode<Integer> head1;
+        LinkedListNode<Integer> head;
+        if(temp1.data <= temp2.data){
+            head = temp1;
+            head1 = temp1;
+            temp1 = temp1.next;
+        }else{
+            head = temp2;
+            head1 = temp2;
+            temp2 = temp2.next;
+        }
+        while(temp1 != null && temp2 != null){
+            if(temp1.data <= temp2.data){
+                head.next = temp1;
+                temp1 = temp1.next;
+            }else{
+                head.next = temp2;
+                temp2 = temp2.next;
+            }
+            head = head.next;
+        }
+        while (temp1 != null){
+            head.next = temp1;
+            temp1 = temp1.next;
+            head = head.next;
+        }
+        while (temp2 != null){
+            head.next = temp2;
+            temp2 = temp2.next;
+            head = head.next;
+        }
+        return head1;
+    }
+    static ListNode mergeTwoLL(ListNode list1, ListNode list2){
+        if(list1 == null) return list2;
+        if(list2 == null) return list1;
+
+        ListNode temp1 = list1;
+        ListNode temp2 = list2;
+        ListNode head1;
+        ListNode head;
+        if(temp1.val <= temp2.val){
+            head = temp1;
+            head1 = temp1;
+            temp1 = temp1.next;
+        }else{
+            head = temp2;
+            head1 = temp2;
+            temp2 = temp2.next;
+        }
+        while(temp1 != null && temp2 != null){
+            if(temp1.val <= temp2.val){
+                head.next = temp1;
+                temp1 = temp1.next;
+            }else{
+                head.next = temp2;
+                temp2 = temp2.next;
+            }
+            head = head.next;
+        }
+        while (temp1 != null){
+            head.next = temp1;
+            temp1 = temp1.next;
+            head = head.next;
+        }
+        while (temp2 != null){
+            head.next = temp2;
+            temp2 = temp2.next;
+            head = head.next;
+        }
+        return head1;
+    }
+
+    class Nodes {
+        public int data;
+        public Nodes next;
+        public Nodes child;
+
+        Nodes()
+        {
+            this.data = 0;
+            this.next = null;
+            this.child = null;
+        }
+        Nodes(int data)
+        {
+            this.data = data;
+            this.next = null;
+            this.child = null;
+        }
+        Nodes(int data, Nodes next, Nodes child)
+        {
+            this.data = data;
+            this.next = next;
+            this.child = child;
+        }
+    }
+    static Nodes FlattenLinkedList(Nodes head){
+        if(head == null) return null;
+        Nodes row = head;
+        Nodes newLL = new Nodes(-1);
+        Nodes newLLHead = newLL;
+        while (row != null && newLL != null){
+            Nodes col = row.child;
+            newLL.next = row;
+            while (col != null){
+                newLL.next = col;
+                newLL = newLL.next;
+                col = col.child;
+            }
+            row = row.next;
+            newLL = newLL.next;
+        }
+        return newLLHead.next;
+    }
 }
 
