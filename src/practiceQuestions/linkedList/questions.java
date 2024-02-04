@@ -655,23 +655,164 @@ public class questions {
         return head1;
     }
 
-    static NodeWithChild FlattenLinkedList(NodeWithChild head){
-        if(head == null) return null;
-        NodeWithChild row = head;
-        NodeWithChild newLL = new NodeWithChild(-1);
-        NodeWithChild newLLHead = newLL;
-        while (row != null && newLL != null){
-            NodeWithChild col = row.child;
-            newLL.next = row;
-            while (col != null){
-                newLL.next = col;
-                newLL = newLL.next;
-                col = col.child;
-            }
-            row = row.next;
-            newLL = newLL.next;
+    static NodeWithChild merge(NodeWithChild first, NodeWithChild second){
+        NodeWithChild third;
+        NodeWithChild last;
+
+        if(first.data <= second.data){
+            third = last = first;
+            first= first.child;
         }
-        return newLLHead.next;
+        else{
+            third = last = second;
+            second = second.child;
+        }
+
+
+        while(first != null && second != null){
+            if(first.data <= second.data){
+                last.child = first;
+                last = first;
+                first= first.child;
+            }
+            else{
+                last.child = second;
+                last = second;
+                second = second.child;
+            }
+        }
+
+        if(first != null){
+            last.child = first;
+        }
+        if(second != null) {
+            last.child = second;
+        }
+
+        return third;
     }
+
+    static NodeWithChild FlattenLinkedList(NodeWithChild head){
+        if(head == null || head.next == null) return head;
+        NodeWithChild ans = head;
+        NodeWithChild ptr = head.next;
+        ans.next = null;
+        while(ptr != null){
+            NodeWithChild tmp = ptr.next;
+            ptr.next =null;
+            ans = merge(ans,ptr);
+            ptr = tmp;
+        }
+
+        return ans;
+    }/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node prev;
+    public Node next;
+    public Node child;
+};
+*/
+
+    class DoubleLinkedListFlattenSolution {
+        public Node flatten(Node head) {
+            flat(head);
+            return head;
+        }
+
+        public Node flat(Node head){
+            Node curr = head;
+            Node last = head;
+            while(curr!=null){
+                if(curr.child!=null){
+                    //if we encounter child we will try to flatten that child and return its tail
+                    Node midTail = flat(curr.child);
+
+                    //if current node next is not null we need to connect it with curr next
+                    Node next = curr.next;
+                    if(next!=null){
+                        midTail.next = next;
+                        next.prev = midTail;
+                    }
+
+                    //there we are connecting mid node's first node with curr node next pointer
+                    curr.next = curr.child;
+                    curr.child.prev = curr;
+
+                    //we make sure all child nodes should be null;
+                    curr.child = null;
+
+                    //there, we are giving curr pointer to midTail which is the end of child linked list
+                    curr = midTail;
+                }
+                //we used last pointer to get the last node of child
+                last = curr;
+                curr = curr.next;
+            }
+            return last;
+        }
+    }
+//    static NodeWithChild FlattenLinkedList(NodeWithChild head){
+//        if(head == null || head.next == null) return head;
+//        NodeWithChild ans = new NodeWithChild(-1);
+//        NodeWithChild ansHead = ans;
+//        NodeWithChild temp = head;
+//        NodeWithChild tempNext = temp.next;
+//        while(temp != null && tempNext != null){
+//            NodeWithChild child = temp.child;
+//            NodeWithChild tempNextChild = tempNext.child;
+//
+//            if (temp.data <= tempNext.data) {
+//                ans.next = new NodeWithChild(temp.data);
+//            }
+//            else {
+//                ans.next = new NodeWithChild(tempNext.data);
+//            }
+//            ans = ans.next;
+//
+//            while(child != null && tempNextChild != null){
+//                if (child.data <= tempNextChild.data){
+//                    ans.next = new NodeWithChild(child.data);
+//                    child = child.child;
+//                }else{
+//                    ans.next = new NodeWithChild(tempNextChild.data);
+//                    tempNextChild = tempNextChild.child;
+//                }
+//                ans = ans.next;
+//            }
+//            while(child != null){
+//                ans.next = new NodeWithChild(child.data);
+//                ans = ans.next;
+//                child = child.child;
+//            }
+//            while(tempNextChild != null){
+//                ans.next = new NodeWithChild(tempNextChild.data);
+//                ans = ans.next;
+//                tempNextChild = tempNextChild.child;
+//            }
+//            temp = temp.next.next;
+//            tempNext = tempNext.next.next;
+//        }
+//        return ansHead.next;
+//    }
+//    static Node FlattenLinkedListCC(Node head){
+//        if(head == null || head.next == null) return head;
+//        Node ans = new Node(-1);
+//        Node ansHead = ans;
+//        Node temp = head;
+//        while(temp != null){
+//            ans.next = new Node(temp.data);
+//            ans = ans.next;
+//            NodeWithChild child = temp.child;
+//            while(child != null){
+//                ans.next = new Node(child.data);
+//                child = child.child;
+//                ans = ans.next;
+//            }
+//            temp = temp.next;
+//        }
+//        return ansHead.next;
+//    }
 }
 
