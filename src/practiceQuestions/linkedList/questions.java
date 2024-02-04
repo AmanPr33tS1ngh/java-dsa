@@ -5,74 +5,183 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class ListNode {
-
-    /**
-     * LEET CODE
-     * Definition for singly-linked list.
-     * public class ListNode {
-     *     int val;
-     *     ListNode next;
-     *     ListNode() {}
-     *     ListNode(int val) { this.val = val; }
-     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
-     * }
-     */
-    int val;
-    ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- }
-class LinkedListNode {
-    /** CODING NINJAS **/
-
-    int data;
-    LinkedListNode next;
-
-    LinkedListNode(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-class Node {
-    /** CODING NINJAS **/
-    public int data;
-    public Node next;
-
-    Node()
-    {
-        this.data = 0;
-        this.next = null;
-    }
-
-    Node(int data)
-    {
-        this.data = data;
-        this.next = null;
-    }
-
-    Node(int data, Node next)
-    {
-        this.data = data;
-        this.next = next;
-    }
-};
-
 public class questions {
+
+    static class ListNode {
+
+        /**
+         * LEET CODE
+         * Definition for singly-linked list.
+         * public class ListNode {
+         *     int val;
+         *     ListNode next;
+         *     ListNode() {}
+         *     ListNode(int val) { this.val = val; }
+         *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+         * }
+         */
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+    static class LinkedListNode {
+        /** CODING NINJAS **/
+
+        int data;
+        LinkedListNode next;
+
+        LinkedListNode(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+
+    static class Node {
+        /** CODING NINJAS **/
+        public int data;
+        public Node next;
+
+        Node()
+        {
+            this.data = 0;
+            this.next = null;
+        }
+
+        Node(int data)
+        {
+            this.data = data;
+            this.next = null;
+        }
+
+        Node(int data, Node next)
+        {
+            this.data = data;
+            this.next = next;
+        }
+    };
+
+    static class NodeWithPrev {
+        public int data;
+        public NodeWithPrev next;
+        public NodeWithPrev prev;
+
+        NodeWithPrev()
+        {
+            this.data = 0;
+            this.next = null;
+            this.prev = null;
+        }
+        NodeWithPrev(int data)
+        {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+        NodeWithPrev(int data, NodeWithPrev next, NodeWithPrev prev)
+        {
+            this.data = data;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+    class NodeT<T> {
+        T data;
+        NodeT<T> next;
+        NodeT<T> prev;
+
+        public NodeT(T data) {
+            this.data = data;
+        }
+    }
+
+    static class NodeWithChild {
+        public int data;
+        public NodeWithChild next;
+        public NodeWithChild child;
+
+        NodeWithChild()
+        {
+            this.data = 0;
+            this.next = null;
+            this.child = null;
+        }
+        NodeWithChild(int data)
+        {
+            this.data = data;
+            this.next = null;
+            this.child = null;
+        }
+        NodeWithChild(int data, NodeWithChild next, NodeWithChild child)
+        {
+            this.data = data;
+            this.next = next;
+            this.child = child;
+        }
+    }
     public static void main(String[] args) {
-        DoublyLinkedList dll = new DoublyLinkedList();
-        dll.insertLast(1);
-        dll.insertLast(2);
-        dll.insertLast(3);
-        dll.insertLast(4);
-        dll.insertLast(5);
-        dll.insertLast(6);
-        dll.insertLast(7);
-        dll.insertLast(8);
-        dll.printLL();
-        System.out.println();
-        reverseDoublyLinkedListPrint(reverseDoublyLinkedList(dll));
+//        DoublyLinkedList dll = new DoublyLinkedList();
+//        dll.insertLast(1);
+//        dll.insertLast(2);
+//        dll.insertLast(3);
+//        dll.insertLast(4);
+//        dll.insertLast(5);
+//        dll.insertLast(6);
+//        dll.insertLast(7);
+//        dll.insertLast(8);
+//        dll.printLL();
+//        System.out.println();
+//        reverseDoublyLinkedListPrint(reverseDoublyLinkedList(dll));
+//        int[] arr = {1,2,3,4,5,6,7,8};
+//        Nodes ans = new Nodes(-1);
+//        ans = arrayToLinkedListNodes(arr);
+        int[][] arr = {{1,2,3}, {4,5,6}, {7,8,9}};
+        NodeWithChild nwc = arrayToLinkedListNodeWithChild(arr);
+        nwc = FlattenLinkedList(nwc);
+        printListNodeWithChild(nwc);
+    }
+    Node arrayToLinkedList(int[] arr){
+        if (arr.length == 0)return null;
+        Node head = new Node(-1);
+        Node temp = head;
+        for (int i = 0; i<arr.length;i++){
+            temp.next = new Node(arr[i]);
+            temp = temp.next;
+        }
+        return head.next;
+    }
+    static NodeWithChild arrayToLinkedListNodeWithChild(int[][] arr){
+        if (arr.length == 0) return null;
+        NodeWithChild head = new NodeWithChild(-1);
+        NodeWithChild temp = head;
+        for (int i = 0; i<arr.length;i++){
+            temp.next = new NodeWithChild(arr[i][0]);
+            NodeWithChild child = new NodeWithChild(-1);
+            NodeWithChild childHead = child;
+            for (int j = 1; j< arr[i].length;j++){
+                child.child = new NodeWithChild(arr[i][j]);
+                child = child.child;
+            }
+            temp = temp.next;
+            temp.child = childHead.child;
+        }
+        return head.next;
+    }
+    static void printListNodeWithChild(NodeWithChild head){
+        if (head == null) return;
+        NodeWithChild temp = head;
+        while (temp != null){
+            System.out.print(temp.data);
+            NodeWithChild child = temp.child;
+            while(child != null){
+                System.out.print("->" + child.data);
+                child = child.child;
+            }
+            temp = temp.next;
+            System.out.println();
+        }
     }
 
     static DoublyLinkedList reverseDoublyLinkedList(DoublyLinkedList dll){
@@ -376,44 +485,11 @@ public class questions {
         return null;
     }
 
-    class Node {
-        public int data;
-        public Node next;
-        public Node prev;
-
-        Node()
-        {
-            this.data = 0;
-            this.next = null;
-            this.prev = null;
-        }
-        Node(int data)
-        {
-            this.data = data;
-            this.next = null;
-            this.prev = null;
-        }
-        Node(int data, Node next, Node prev)
-        {
-            this.data = data;
-            this.next = next;
-            this.prev = prev;
-        }
-    }
-//    class Node<T> {
-//        T data;
-//        Node<T> next;
-//        Node<T> prev;
-//
-//        public Node(T data) {
-//            this.data = data;
-//        }
-//    }
-    static Node deleteNodeWithKey(Node head, int key) {
+    static NodeWithPrev deleteNodeWithKey(NodeWithPrev head, int key) {
         if (head == null) return null;
-        Node temp = head.next;
-        Node prev = null;
-        Node next = null;
+        NodeWithPrev temp = head.next;
+        NodeWithPrev prev = null;
+        NodeWithPrev next = null;
         while(temp != null){
             if(temp.data == key){
                 if(temp == head){
@@ -432,10 +508,10 @@ public class questions {
         }
         return head;
     }
-    static Map<Integer,Integer> findPair(Node head, int k) { // two pointer approach
+    static Map<Integer,Integer> findPair(NodeWithPrev head, int k) { // two pointer approach
         Map<Integer,Integer> mp=new HashMap<>();
-        Node left= head;
-        Node right = head;
+        NodeWithPrev left= head;
+        NodeWithPrev right = head;
         while(right!=null && right.next !=null)
         {
             right = right.next;
@@ -500,45 +576,45 @@ public class questions {
         temp.next = null;
         return first;
     }
-    static LinkedListNode mergeTwoLL(LinkedListNode first, LinkedListNode second){
-        if(first == null) return second;
-        if(second == null) return first;
-
-        LinkedListNode<Integer> temp1 = first;
-        LinkedListNode<Integer> temp2 = second;
-        LinkedListNode<Integer> head1;
-        LinkedListNode<Integer> head;
-        if(temp1.data <= temp2.data){
-            head = temp1;
-            head1 = temp1;
-            temp1 = temp1.next;
-        }else{
-            head = temp2;
-            head1 = temp2;
-            temp2 = temp2.next;
-        }
-        while(temp1 != null && temp2 != null){
-            if(temp1.data <= temp2.data){
-                head.next = temp1;
-                temp1 = temp1.next;
-            }else{
-                head.next = temp2;
-                temp2 = temp2.next;
-            }
-            head = head.next;
-        }
-        while (temp1 != null){
-            head.next = temp1;
-            temp1 = temp1.next;
-            head = head.next;
-        }
-        while (temp2 != null){
-            head.next = temp2;
-            temp2 = temp2.next;
-            head = head.next;
-        }
-        return head1;
-    }
+//    static LinkedListNode mergeTwoLL(LinkedListNode first, LinkedListNode second){
+//        if(first == null) return second;
+//        if(second == null) return first;
+//
+//        LinkedListNode<Integer> temp1 = first;
+//        LinkedListNode<Integer> temp2 = second;
+//        LinkedListNode<Integer> head1;
+//        LinkedListNode<Integer> head;
+//        if(temp1.data <= temp2.data){
+//            head = temp1;
+//            head1 = temp1;
+//            temp1 = temp1.next;
+//        }else{
+//            head = temp2;
+//            head1 = temp2;
+//            temp2 = temp2.next;
+//        }
+//        while(temp1 != null && temp2 != null){
+//            if(temp1.data <= temp2.data){
+//                head.next = temp1;
+//                temp1 = temp1.next;
+//            }else{
+//                head.next = temp2;
+//                temp2 = temp2.next;
+//            }
+//            head = head.next;
+//        }
+//        while (temp1 != null){
+//            head.next = temp1;
+//            temp1 = temp1.next;
+//            head = head.next;
+//        }
+//        while (temp2 != null){
+//            head.next = temp2;
+//            temp2 = temp2.next;
+//            head = head.next;
+//        }
+//        return head1;
+//    }
     static ListNode mergeTwoLL(ListNode list1, ListNode list2){
         if(list1 == null) return list2;
         if(list2 == null) return list1;
@@ -579,37 +655,13 @@ public class questions {
         return head1;
     }
 
-    class Nodes {
-        public int data;
-        public Nodes next;
-        public Nodes child;
-
-        Nodes()
-        {
-            this.data = 0;
-            this.next = null;
-            this.child = null;
-        }
-        Nodes(int data)
-        {
-            this.data = data;
-            this.next = null;
-            this.child = null;
-        }
-        Nodes(int data, Nodes next, Nodes child)
-        {
-            this.data = data;
-            this.next = next;
-            this.child = child;
-        }
-    }
-    static Nodes FlattenLinkedList(Nodes head){
+    static NodeWithChild FlattenLinkedList(NodeWithChild head){
         if(head == null) return null;
-        Nodes row = head;
-        Nodes newLL = new Nodes(-1);
-        Nodes newLLHead = newLL;
+        NodeWithChild row = head;
+        NodeWithChild newLL = new NodeWithChild(-1);
+        NodeWithChild newLLHead = newLL;
         while (row != null && newLL != null){
-            Nodes col = row.child;
+            NodeWithChild col = row.child;
             newLL.next = row;
             while (col != null){
                 newLL.next = col;
