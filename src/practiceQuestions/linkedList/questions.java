@@ -6,6 +6,46 @@ import java.util.List;
 import java.util.Map;
 
 public class questions {
+    // great question with use case | similar to dll;
+    class BrowserHistoryNode{
+        BrowserHistoryNode prev;
+        BrowserHistoryNode next;
+        String url;
+        BrowserHistoryNode(String url){
+            this.url = url;
+        }
+    }
+    class BrowserHistory {
+        BrowserHistoryNode current;
+        public BrowserHistory(String homepage) {
+            this.current = new BrowserHistoryNode(homepage);
+        }
+
+        public void visit(String url) {
+            BrowserHistoryNode pageToVisit = new BrowserHistoryNode(url);
+            this.current.next = pageToVisit;
+            pageToVisit.prev = this.current;
+            this.current = pageToVisit;
+        }
+
+        public String back(int steps) {
+            while(steps > 0 && this.current.prev != null){
+                this.current = this.current.prev;
+                steps--;
+            }
+            return this.current.url;
+        }
+
+        public String forward(int steps) {
+            int i = 0;
+            while(i < steps && this.current.next != null){
+                this.current = this.current.next;
+                i++;
+            }
+            return this.current.url;
+        }
+    }
+
 
     static class ListNode {
 
@@ -814,5 +854,6 @@ class Node {
 //        }
 //        return ansHead.next;
 //    }
+//    static
 }
 
