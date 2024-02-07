@@ -1,6 +1,9 @@
 package practiceQuestions.stack;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -167,8 +170,14 @@ public class practiceQues {
 //        System.out.println(ms.pop());
 //        ms.empty();
 
-        String s = "]";
-        System.out.println(isValid(s));
+//        String s = "]";
+//        System.out.println(isValid(s));
+
+//        int[] arr = {5,5,5,5};
+//        System.out.println(Arrays.toString(nextGreaterElement(arr,arr.length)));
+        int[] arr1 = {1,2,3,4};
+        int[] arr2 = {1,2,3,4,5};
+        System.out.println(Arrays.toString(nextGreaterElement(arr1,arr2)));
     }
 
     static boolean isValid(String s) {
@@ -189,5 +198,81 @@ public class practiceQues {
             }
         }
         return stack.isEmpty();
+    }
+    static int[] nextGreaterElement(int[] arr, int n) {
+        int[] ans = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = n-1; i >= 0; i--) {
+            while(!stack.isEmpty() && stack.peek() <= arr[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()) {
+                ans[i] = -1;
+            }else {
+                ans[i] = stack.peek();
+            }
+            stack.push(arr[i]);
+        }
+        return ans;
+    }
+    static int[] nextGreaterElement(int[] findNums, int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>(); // map from x to next greater element of x
+        Stack<Integer> stack = new Stack<>();
+        for (int num : nums) {
+            while (!stack.isEmpty() && stack.peek() < num)
+                map.put(stack.pop(), num);
+            stack.push(num);
+        }
+        for (int i = 0; i < findNums.length; i++)
+            findNums[i] = map.getOrDefault(findNums[i], -1);
+        return findNums;
+    }
+    //lc
+    static int largestRectangleArea(int[] heights) { // for explanation: https://www.youtube.com/watch?v=X0X6G-eWgQ8&list=PLgUwDviBIf0oSO572kQ7KCSvCUh1AdILj&index=11
+        Stack<Integer> st = new Stack<>();
+        int[] leftSmallest = new int[heights.length];
+        int[] rightSmallest = new int[heights.length];
+        for (int i = 0;i<heights.length;i++){
+            while (!st.isEmpty() && heights[st.peek()] >= heights[i])st.pop();
+            if(st.isEmpty())leftSmallest[i]=0;
+            else leftSmallest[i] = st.peek() + 1;
+            st.push(i);
+        }
+        while (!st.isEmpty()) st.pop();
+        for (int i = heights.length-1;i>=0;i--){
+            while (!st.isEmpty() && heights[st.peek()] >= heights[i])st.pop();
+            if(st.isEmpty())rightSmallest[i]=heights.length - 1;
+            else rightSmallest[i] = st.peek() - 1;
+            st.push(i);
+        }
+        int max = 0;
+        for (int i = 0; i < heights.length; i++) {
+            max = Integer.max(max, heights[i] * (rightSmallest[i] - leftSmallest[i] + 1));
+        }
+        return max;
+    }
+
+    static int largestRectangle(ArrayList<Integer> heights) { //coding ninjas
+        Stack<Integer> st = new Stack<>();
+        int[] leftSmallest = new int[heights.size()];
+        int[] rightSmallest = new int[heights.size()];
+        for (int i = 0;i<heights.size();i++){
+            while (!st.isEmpty() && heights.get(st.peek()) >= heights.get(i))st.pop();
+            if(st.isEmpty())leftSmallest[i]=0;
+            else leftSmallest[i] = st.peek() + 1;
+            st.push(i);
+        }
+        while (!st.isEmpty()) st.pop();
+        for (int i = heights.size()-1;i>=0;i--){
+            while (!st.isEmpty() && heights.get(st.peek()) >= heights.get(i))st.pop();
+            if(st.isEmpty())rightSmallest[i]=heights.size() - 1;
+            else rightSmallest[i] = st.peek() - 1;
+            st.push(i);
+        }
+        int max = 0;
+        for (int i = 0; i < heights.size(); i++) {
+            max = Integer.max(max, heights.get(i) * (rightSmallest[i] - leftSmallest[i] + 1));
+        }
+        return max;
     }
 }
