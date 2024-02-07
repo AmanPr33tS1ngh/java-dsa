@@ -3,6 +3,7 @@ package practiceQuestions.stack;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 class QuesNode {
     int val;
@@ -158,11 +159,35 @@ public class practiceQues {
 //        System.out.println(ms.getMin());
 //        ms.pop();
 //        System.out.println(ms.getMin());
-        MyStack ms = new MyStack();
-        ms.push(1);
-        ms.push(2);
-        System.out.println(ms.top());
-        System.out.println(ms.pop());
-        ms.empty();
+
+//        MyStack ms = new MyStack();
+//        ms.push(1);
+//        ms.push(2);
+//        System.out.println(ms.top());
+//        System.out.println(ms.pop());
+//        ms.empty();
+
+        String s = "]";
+        System.out.println(isValid(s));
+    }
+
+    static boolean isValid(String s) {
+        if(s.length()==1)return false;
+        java.util.Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            char top = 'a';
+            if(!stack.isEmpty()) {
+                top = stack.peek();
+            }
+            char el = s.charAt(i);
+            if(el == '(' || el == '{' || el == '[') {
+                stack.push(el);
+            }else if(top == '[' && el == ']' || top == '(' && el == ')' || top == '{' && el == '}'){
+                stack.pop();
+            }else{
+                return false;
+            }
+        }
+        return stack.isEmpty();
     }
 }
