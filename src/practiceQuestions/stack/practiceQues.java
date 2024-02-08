@@ -1,11 +1,7 @@
 package practiceQuestions.stack;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 import java.util.Stack;
 
 class QuesNode {
@@ -274,5 +270,33 @@ public class practiceQues {
             max = Integer.max(max, heights.get(i) * (rightSmallest[i] - leftSmallest[i] + 1));
         }
         return max;
+    }
+    static int[] maxSlidingWindow(int[] arr, int k) {
+        Deque<Integer> dq = new ArrayDeque<>();
+        int[] ans = new int[arr.length - k + 1];
+        int j = 0;
+        for (int i = 0;i<arr.length;i++){
+            if(!dq.isEmpty() && dq.peek() == i-k) dq.poll(); // for outer bound or out of window element
+            while (!dq.isEmpty() && arr[dq.peekLast()] < arr[i])dq.pollLast();
+            dq.offer(i);
+            if(!dq.isEmpty() && i>=k-1) { // start adding answers when i is gt k-1
+                ans[j++] = arr[dq.peek()];
+            }
+        }
+        return ans;
+    }
+    static ArrayList<Integer> getMaximumOfSubarrays(ArrayList<Integer> nums, int k)
+    {
+        Deque<Integer> dq = new ArrayDeque<>();
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0;i<nums.size();i++){
+            if(!dq.isEmpty() && dq.peek() == i-k) dq.poll(); // for outer bound or out of window element
+            while (!dq.isEmpty() && nums.get(dq.peekLast()) < nums.get(i))dq.pollLast();
+            dq.offer(i);
+            if(!dq.isEmpty() && i>=k-1) { // start adding answers when i is gt k-1
+                ans.add(nums.get(dq.peek()));
+            }
+        }
+        return ans;
     }
 }
