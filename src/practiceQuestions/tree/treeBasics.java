@@ -15,6 +15,16 @@ class BinaryTreeNode<T> {
         this.data = data;
     }
 }
+class Node {
+    //coding ninjas
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
 class BinaryTree{
     BinaryTree left;
     BinaryTree right;
@@ -148,5 +158,38 @@ public class treeBasics {
         ArrayList<Integer> arr = new ArrayList<>();
         if(root != null) arr.add(root.data);
         return lot(root,  arr);
+    }
+    static Node addElementInBST(int data, Node root){
+        if(root == null) {
+            root = new Node(data);
+            return root;
+        }
+        if(root.data <= data){
+            root.left = addElementInBST(data, root.left);
+        }else{
+            root.right = addElementInBST(data, root.right);
+        }
+        return root;
+    }
+    static TreeNode insertIntoBST(TreeNode root, int val) {
+        if(root == null) {
+            root = new TreeNode(val);
+            return root;
+        }
+        if(root.val < val){
+            root.left = insertIntoBST(root.left, val);
+        }
+        if(root.val > val){
+            root.right = insertIntoBST(root.right, val);
+        }
+        return root;
+    }
+    static int size(TreeNode node) {
+        if(node == null) return 0;
+        return size(node.left) + size(node.right) + 1;
+    }
+    static int maxInBT(TreeNode node) {
+        if(node == null) return 0;
+        return Math.max(node.val, Math.max(maxInBT(node.left), maxInBT(node.right)));
     }
 }
