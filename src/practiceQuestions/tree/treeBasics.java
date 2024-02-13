@@ -1,6 +1,7 @@
 package practiceQuestions.tree;
 import com.sun.source.tree.Tree;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,15 +54,21 @@ public class treeBasics {
 //        bt.right = new BinaryTree(4);
 //        bt.left = new BinaryTree(3);
 //        System.out.println(bt.data);
-        BinaryTreeNode<Integer> bt = new BinaryTreeNode<Integer>(1);
-        bt.left = new BinaryTreeNode<Integer>(2);
-        bt.right = new BinaryTreeNode<Integer>(3);
-        bt.left.left = new BinaryTreeNode<Integer>(4);
-        bt.left.right = new BinaryTreeNode<Integer>(5);
-        bt.right.left = new BinaryTreeNode<Integer>(6);
-        bt.right.right = new BinaryTreeNode<Integer>(7);
-        System.out.println(bt.data);
-        System.out.println(getLevelOrder(bt));
+//        BinaryTreeNode<Integer> bt = new BinaryTreeNode<Integer>(1);
+//        bt.left = new BinaryTreeNode<Integer>(2);
+//        bt.right = new BinaryTreeNode<Integer>(3);
+//        bt.left.left = new BinaryTreeNode<Integer>(4);
+//        bt.left.right = new BinaryTreeNode<Integer>(5);
+//        bt.right.left = new BinaryTreeNode<Integer>(6);
+//        bt.right.right = new BinaryTreeNode<Integer>(7);
+        TreeNode bt = new TreeNode(1);
+        bt.left = new TreeNode(2);
+        bt.right = new TreeNode(3);
+        bt.left.left = new TreeNode(4);
+        bt.left.right = new TreeNode(5);
+        bt.right.left = new TreeNode(6);
+        bt.right.right = new TreeNode(7);
+        System.out.println(rightSideView(bt));
     }
     static void preOrderTraversal(BinaryTree bt){
         if(bt == null) return;
@@ -191,5 +198,29 @@ public class treeBasics {
     static int maxInBT(TreeNode node) {
         if(node == null) return 0;
         return Math.max(node.val, Math.max(maxInBT(node.left), maxInBT(node.right)));
+    }
+    static int lvlOrderTraversal(TreeNode node, int level) { // call this in loop for full traversal
+        if(node == null) return 0;
+        if(level == 1) {
+            System.out.println(node.val);
+        }
+        lvlOrderTraversal(node.left, level -1);
+        lvlOrderTraversal(node.right, level -1);
+        return node.val;
+    }
+    static void getRightSideView(TreeNode root, List<TreeNode> ans, int level){
+        if (root == null)return;
+        if(ans.size() == level)ans.add(root);
+        getRightSideView(root.right, ans, level+1);
+        getRightSideView(root.left, ans, level+1);
+    }
+    public List<Integer> rightSideView(TreeNode root) {
+        List<TreeNode> ans = new ArrayList<>();
+        getRightSideView(root, ans, 0);
+        List<Integer> a = new ArrayList<>();
+        for(int i = 0;i<ans.size();i++){
+            a.add(ans.get(i).val);
+        }
+        return a;
     }
 }
