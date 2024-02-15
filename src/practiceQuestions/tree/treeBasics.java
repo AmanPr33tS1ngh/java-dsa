@@ -232,4 +232,34 @@ public class treeBasics {
         if(right == null)return left;
         return root;
     }
+    static int minValue(TreeNode root){
+        int minV = root.val;
+        while(root.left != null){
+            minV = root.left.val;
+            root = root.left;
+        }
+        return minV;
+    }
+    static TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null)return null;
+        if(key < root.val){
+            root.left = deleteNode(root.left, key);
+        }else if(key > root.val){
+            root.right = deleteNode(root.right, key);
+        }else{
+            if(root.left == null)return root.right;
+            else if(root.right == null)return root.left;
+            root.val = minValue(root.right);
+            root.right = deleteNode(root.right, root.val);
+        }
+        return root;
+    }
+    static boolean isBST(TreeNode root, int lb, int ub){
+        if(root==null)return true;
+        if(root.val < lb || root.val > ub)return false;
+        return isBST(root.left, lb, root.val - 1) && isBST(root.right, root.val + 1, ub);
+    }
+    static boolean isValidBST(TreeNode root) {
+        return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
 }
