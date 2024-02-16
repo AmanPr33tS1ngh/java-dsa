@@ -2,9 +2,7 @@ package practiceQuestions.tree;
 import com.sun.source.tree.Tree;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 class BinaryTreeNode<T> {
     //coding ninjas
@@ -47,7 +45,19 @@ class TreeNode {
         this.right = right;
     }
 }
+class TreeNodes<T>
+{
+    T data;
+    TreeNodes<T> left;
+    TreeNodes<T> right;
 
+    TreeNodes(T data)
+    {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+};
 public class treeBasics {
     public static void main(String[] args){
 //        BinaryTree bt = new BinaryTree(5);
@@ -214,7 +224,7 @@ public class treeBasics {
         getRightSideView(root.right, ans, level+1);
         getRightSideView(root.left, ans, level+1);
     }
-    public List<Integer> rightSideView(TreeNode root) {
+    static List<Integer> rightSideView(TreeNode root) {
         List<TreeNode> ans = new ArrayList<>();
         getRightSideView(root, ans, 0);
         List<Integer> a = new ArrayList<>();
@@ -261,5 +271,32 @@ public class treeBasics {
     }
     static boolean isValidBST(TreeNode root) {
         return isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+//    static int findCeil(TreeNode<Integer> node, int x) {
+//        if(node == null)return 0;
+//        int ans = node.val;
+//        while(node != null){
+//            if(node.val == x)return node.val;
+//            if(node.left != null && node.left.val < ans && node.left.val > x) {
+//                ans = node.left.val;
+//                node = node.left;
+//            }else{
+//                ans = node.right.val;
+//                node = node.right;
+//            }
+//        }
+//        return ans;
+//    }
+    static boolean findTwoSum(TreeNode root, int sum, Set<Integer> set){
+        if(root == null)return false;
+        if(findTwoSum(root.left, sum-root.val, set))return true;
+        set.add(root.val);
+        return findTwoSum(root.right, sum, set);
+    }
+
+    static boolean findTarget(TreeNode root, int k) {
+        Set<Integer> set = new HashSet<>();
+        return findTwoSum(root, k, set);
     }
 }
